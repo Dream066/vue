@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script defer src="vue.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <h1>Мой список задач<like-button v-model="headerLikes"></like-button>
+            <dislike-button v-model="headerDislikes"></dislike-button>
+        </h1>
+        <h3>Количество лайков - {{ countLikes }}</h3>
+        <h3>Количество дизлайков - {{ countDislikes }}</h3>
+        <div>Осталось сделать задач: <span class="counter">{{count}}</span></div>
+        <div v-if="count == 1">остался последний рывок!</div>
+        <div v-else-if="count == 0">вы великолепны!</div>
+        <task-list :tasks="completedTasks" title="Список сделанных задач"></task-list>
+        <task-list v-if="uncompletedTasks" :tasks="uncompletedTasks">
+        </task-list>
+        <form class="form" @submit.prevent="addTask">
+            <input :placeholder="message" v-model="inputValue">
+            <button type="submit" :disabled="inputValue === ''">Добавить</button>
+            <like-button :couter="formLikes" v-model="formLikes"></like-button>
+            <dislike-button v-model="formDislikes"></dislike-button>
+        </form>
+        <transition name="bounce">
+            <img src="http://placekitten.com/200/200" alt="" v-show="count == 0">
+        </transition>
+        <transition name="reverce">
+            <img src="http://placekitten.com/200/200" alt="" v-show="count == 0">
+        </transition>
+
+        <!-- <h2>Список задач моей девушки</h2>
+        <div>Осталось сделать задач: <span class="counter">{{countMyGirlTasks()}}</span></div>
+        <div v-if="countMyGirlTasks() == 1">остался последний рывок!</div>
+        <div v-else-if="countMyGirlTasks() == 0">вы великолепны!</div>
+        <div class="list">
+            <div class="item" :class="{done: task.done}" v-for="task in myGirlTasks">
+                <input type="checkbox" checked v-model="task.done">
+                {{task.text}} <like-button></like-button>
+            </div>
+        </div>
+        <div class="form">
+            <input :placeholder="message" v-model="myGirlInputValue">
+            <button type="button" @click="addTaskMyGirl" :disabled="myGirlInputValue === ''">Добавить</button>
+            <like-button></like-button>
+        </div> -->
+    </div>
+
+</body>
+
+</html>
